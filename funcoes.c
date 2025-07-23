@@ -28,27 +28,58 @@ int validarNome(char nome[]) { //Ana
 // FUNCAO EMAIL
 
 // Validação do email
-int validarEmail(char email[]) { //Ana
+int validarEmail(char email[]) {
     int tam = strlen(email);
 
+    
     if (tam > 50) {
         return 0;
-    }
+    }// Verifica tamanho máximo
 
-    // Guarda a posição do '@' no email
+    // Verifica se tem apenas 1 @ e sua posição
     int posArroba = -1;
     for (int i = 0; i < tam; i++) {
         if (email[i] == '@') {
             if (posArroba != -1) {
-                return 0; // mais de um @
+                return 0; // já tinha um @, agora tem dois = inválido
             }
             posArroba = i;
         }
     }
 
+    
     if (posArroba == -1 || posArroba == 0 || posArroba == tam - 1) {
-        return 0; // nenhum @ ou posição inválida
+        return 0; // sem @, ou no início/fim
+    }// Verifica se tem @, e se está em posição válida
+
+    
+    if (email[0] == '-' || email[posArroba - 1] == '-') {
+        return 0; // começa ou termina com hífen
+    }// Verifica o username (antes do @)
+
+    for (int i = 0; i < posArroba; i++) {
+        char c = email[i];
+        if (!(islower(c) || isdigit(c) || c == '-')) {
+            return 0; // Caractere inválido no username
+        }
     }
+
+    
+    if (email[posArroba + 1] == '-' || email[tam - 1] == '-') {
+        return 0; // Começa ou termina com hífen
+    }// Verifica o domínio (depois do @)
+
+    for (int i = posArroba + 1; i < tam; i++) {
+        char c = email[i];
+        if (!(islower(c) || isdigit(c) || c == '-')) {
+            return 0; // Caractere inválido no domínio
+        }
+    }
+
+    
+    return 1;// Retorna email válido
+}
+    
 
     // Verifica username
     for (int i = 0; i < posArroba; i++) {
