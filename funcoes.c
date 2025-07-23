@@ -24,3 +24,53 @@ int validarNome(char nome[]) { //Ana
 
     return 1; // Retorna o nome válido
 }
+
+// FUNCAO EMAIL
+
+// Validação do email
+int validarEmail(char email[]) { //Ana
+    int tam = strlen(email);
+
+    if (tam > 50) {
+        return 0;
+    }
+
+    // Guarda a posição do '@' no email
+    int posArroba = -1;
+    for (int i = 0; i < tam; i++) {
+        if (email[i] == '@') {
+            if (posArroba != -1) {
+                return 0; // mais de um @
+            }
+            posArroba = i;
+        }
+    }
+
+    if (posArroba == -1 || posArroba == 0 || posArroba == tam - 1) {
+        return 0; // nenhum @ ou posição inválida
+    }
+
+    // Verifica username
+    for (int i = 0; i < posArroba; i++) {
+        char c = email[i];
+        if (!(islower(c) || isdigit(c) || c == '-')) {
+            return 0;
+        } // Verifica se os caracteres são validos
+    }
+    if (email[0] == '-' || email[posArroba - 1] == '-') {
+        return 0;
+    } // Verifica se o username começa ou termina com hífen
+
+    // Verifica domínio
+    for (int i = posArroba + 1; i < tam; i++) {
+        char c = email[i];
+        if (!(islower(c) || isdigit(c) || c == '-')) {
+            return 0;
+        } // Verifica se o caractere atual do domínio é permitido
+    }
+    if (email[posArroba + 1] == '-' || email[tam - 1] == '-') {
+        return 0;
+    } // Verifica se o domínio começa ou termina com hífen
+    
+    return 1;
+}
