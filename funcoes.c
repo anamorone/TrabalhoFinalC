@@ -74,3 +74,10 @@ int validarEmail(char email[]) { //Ana
     
     return 1;
 }
+
+// FUNCAO MOSTRAR CLIENTE VALIDO
+
+void mostrarCliente(Cliente c) { //Ana
+    printf("\nNome: %s\nCPF: %s\nNascimento: %s\nTelefone: %s\nEmail: %s\n",
+           c.nome, c.cpf, c.nascimento, c.telefone, c.email);
+}// Mostra as informações do cliente validado
